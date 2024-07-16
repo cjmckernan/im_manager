@@ -38,16 +38,16 @@ def sale_checkout(request):
     if request.method == "POST":
         form = CreditCardForm(request.POST)
         if form.is_valid():
-            # Create a payment record
+            company = request.user.company
             transaction_id = str(uuid.uuid4())
             Payment.objects.create(
                 transaction_id=transaction_id,
                 user=request.user,
+                company=company,
                 amount=total,
                 status="Success",
             )
 
-            # Update inventory quantities
             for item in items:
                 inventory_item = InventoryItem.objects.get(id=item["itemId"])
                 inventory_item.quantity -= item["quantity"]
