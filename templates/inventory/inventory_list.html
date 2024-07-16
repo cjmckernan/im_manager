@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Inventory{% endblock title %}
+{% block content %}
+<div class="container mt-5">
+  <h1 class="mb-4">Inventory List</h1><a href="{% url 'inventory_create' %}" class="btn btn-secondary">Add New Item</a>
+        <table id="inventory-table" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Item Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Supplier</th>
+                    <th scope="col">Expiration Date</th>
+                    <th scope="col">Company</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in object_list %}
+                    <tr>
+                        <td>{{ item.item_name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.supplier }}</td>
+                        <td>{{ item.expiration_date }}</td>
+                        <td>{{ item.company.business_name }}</td>
+                        <td><a href="{% url 'inventory_edit' item.pk %}" class="btn btn-outline-primary">Edit</a></td>
+                        <td><a href="{% url 'inventory_delete' item.pk  %}"class="btn btn-outline-danger">Delete</a></td>
+                      </tr>
+                  {% endfor %}
+              </tbody>
+        </table>
+    </div>
+{% endblock content %}
